@@ -39,7 +39,7 @@ class BlogPostHistoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function getAllPostsHistoryByBlogPostId(int $id,int $page = 1, int $limit = 5): array
+    public function getAllPostsHistoryByBlogPostId(int $id,int $page = 1, int $limit = 20): array
     {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();

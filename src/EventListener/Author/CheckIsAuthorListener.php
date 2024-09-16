@@ -38,8 +38,8 @@ class CheckIsAuthorListener
         if (!preg_match('/^\/admin/i', $event->getRequest()->getPathInfo())) {
             return;
         }
-
-        if (null === $user = $this->tokenStorage->getToken()->getUser()) {
+        $user = $this->tokenStorage->getToken()->getUser();
+        if (null === $user) {
             return;
         }
 
