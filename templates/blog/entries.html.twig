@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+{% block title %} Blog Posts{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="blog-main">
+            {% for blogPost in blogPosts %}
+                {% set paragraphs = blogPost.body|split('</p>') %}
+                {% set firstParagraph = paragraphs|first ~ '</p>' %}
+                <div class="blog-post">
+                    <h2 class="blog-post-title">
+                            {{ blogPost.title }}
+                    </h2>
+                    <p class="blog-post-meta">
+                        {{ blogPost.getUpdatedAt|date('F j, Y') }} by
+                            <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
+                            {{ blogPost.author.name }}
+                            </a>
+                    </p>
+                    <p style="margin:auto;max-width: 250px;word-break:break-all">{{ firstParagraph|raw }}<br /></p>
+                    <a class='bluebtn' href="{{ path('entry', {'entryHash': blogPost.hash }) }}"">Read more</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container">
+ <div class="row">
+     <div class="col-sm-8 blog-main-author">
+         <div class="blog-post">
+             <h2 class="blog-post-title">{{ blogPost.title }}</h2>
+             <p class="blog-post-meta">
+                {{ blogPost.updatedAt|date('F j, Y') }} by <a href="{{ path('author', {'name': blogPost.author.username|url_encode }) }}">
+                    {{ blogPost.author.name }}
+                </a>
+            </p>
+             <h3>Body:</h3>
+             <p>{{ blogPost.body|raw }}</p>
+         </div>
+
+         <div class="col-sm-12 blog-main-author">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Title</th>
+                        <th>Body</th>
+                        <th>Change Made</th>
+                        <th>Action</th>
+                        <th>Author</th>
+                    </thead>
+                    {% for blogPost in blogHistorys %}
+                        <tr>
+                            <td>{{ blogPost.title }}</td>
+                            <td>{{ blogPost.body }}</td>
+                            <td>{{ blogPost.createdAt|date('F j, Y, H:i:s') }}</td>
+                            <td>{{ blogPost.action}}</td>
+                            <td>{{ blogPost.author.name }}</td>
+                        </tr>  
+                    {% endfor %}
+                </table>
+            </div>
+     </div>
+ </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">Author Admin</h1>
+            <p class="lead blog-description"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <br>
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <a class="bluebtn" type="button" href="{{ path('admin_create_entry') }}" class="btn btn-primary pull-right">Add Entry</a>
+            </div>
+            <div class="col-sm-12 blog-main-author">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Title</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </thead>
+                    {% for blogPost in blogPosts %}
+                        <tr>
+                            <td>{{ blogPost.title }}</td>
+                            <td>{{ blogPost.createdAt|date('F j, Y, H:i:s') }}</td>
+                            <td>
+                            <a class="bluebtn" href="{{ path('admin_update_entry', {'entryHash': blogPost.hash}) }}">Update</a>
+                            {% if  blogPost.deletedAt %}
+                                <a class="bluebtn" href="{{ path('admin_restore_entry', {'entryHash': blogPost.hash}) }}">Restore</a>
+                            {% else %}
+                                <a class="redbtn"  href="{{ path('admin_delete_entry', {'entryHash': blogPost.hash}) }}">Delete</a>
+                            {% endif %}
+                            <a class="bluebtn" href="{{ path('admin_history_entry', {'entryHash': blogPost.hash}) }}">History</a>
+                            </td>
+                        </tr>  
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
