@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\BaseTrait;
 
 /**
  * Author
@@ -10,19 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  */
-class Author
+class Author 
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
-
-    /**
-     * @ORM\Column(name="hash", type="string", length=10, unique=true)
-     */
-    private string $hash;
+    use BaseTrait;
 
     /**
      * @ORM\Column(name="name", type="string", length=255, unique=true)
@@ -69,37 +60,12 @@ class Author
      */
     private ?string $github;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetimetz")
-     */
-    private \DateTime $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     */
-    private \DateTime $updatedAt;
-
-    /**
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    private ?\DateTime $deletedAt;
-
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->deletedAt = null;
         $this->hash = hash('crc32b', microtime());
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getHash(): int
-    {
-        return $this->id;
     }
 
     public function setName(string $name): Author

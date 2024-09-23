@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,7 +73,6 @@ class AdminController extends AbstractController
     public function createEntryAction(Request $request): Response
     {
         $blogPost = new BlogPost();
-
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
         $blogPost->setAuthor($author);
 
@@ -125,7 +123,7 @@ class AdminController extends AbstractController
     /**
     * @Route("/delete-entry/{entryHash}", name="admin_delete_entry")
     */
-    public function deleteEntryAction(string $entryHash): RedirectResponse
+    public function deleteEntryAction(string $entryHash): Response
     {
         $blogPost = $this->blogPostRepository->findOneByHash($entryHash);
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
@@ -205,7 +203,7 @@ class AdminController extends AbstractController
     /**
     * @Route("/restore-entry/{entryHash}", name="admin_restore_entry")
     */
-    public function restoreEntryAction(string $entryHash): RedirectResponse
+    public function restoreEntryAction(string $entryHash): Response
     {
         $blogPost = $this->blogPostRepository->findOneByHash($entryHash);
         $author = $this->authorRepository->findOneByUsername($this->getUser()->getUserName());
